@@ -47,8 +47,21 @@ public class StartFragment extends Fragment {
         startGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "clicked and fragmentState change to 1 for startGame", Toast.LENGTH_LONG).show();
                 viewModel.setFragmentState(1);
+            }
+        });
+
+        statisticBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.setFragmentState(2);
+            }
+        });
+
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.setFragmentState(3);
             }
         });
 

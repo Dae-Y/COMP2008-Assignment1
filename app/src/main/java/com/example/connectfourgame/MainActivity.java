@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     MainActivityData mainActivityDataViewModel;
     StartFragment startFragment = new StartFragment();
     GameFragment gameFragment = new GameFragment();
+    SettingsFragment settingsFragment = new SettingsFragment();
 
     FrameLayout topFrameLayout;
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(mainActivityDataViewModel.getFragmentState() == 3){
                     topFrameLayout.setVisibility(View.GONE);
-                    //TODO: Add change to settings fragment
+                    loadSettingFragment();
                 }
             }
         });
@@ -67,10 +68,20 @@ public class MainActivity extends AppCompatActivity {
     private void loadGameBoard(){
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag = fm.findFragmentById(R.id.bottomFrameLayout);
-        if(frag == null){
+        if (frag == null) {
             fm.beginTransaction().add(R.id.bottomFrameLayout, gameFragment).commit();
-        }else{
+        } else {
             fm.beginTransaction().replace(R.id.bottomFrameLayout, gameFragment).commit();
+        }
+    }
+
+    private void loadSettingFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.bottomFrameLayout);
+        if(frag == null){
+            fm.beginTransaction().add(R.id.bottomFrameLayout, settingsFragment).commit();
+        }else{
+            fm.beginTransaction().replace(R.id.bottomFrameLayout, settingsFragment).commit();
         }
     }
 }
