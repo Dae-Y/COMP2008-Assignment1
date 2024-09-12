@@ -3,23 +3,25 @@ package com.example.connectfourgame;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
+import com.example.connectfourgame.SubSettingFragments.SettingFragmentChangeGameBoardSize;
+import com.example.connectfourgame.SubSettingFragments.SettingFragmentChangeGameMode;
+import com.example.connectfourgame.SubSettingFragments.SettingFragmentChangePlayerProfile;
 
 /**
  *  Fragment for setting
  *  Author : ACG
  */
 public class SettingsFragment extends Fragment {
-    private LinearLayout changeGameBoardSize_LL;
-    private LinearLayout changeGameMode_LL;
-    private LinearLayout changePlayerProfile_LL;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,51 +31,46 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view;
-        MainActivityData viewModel;
-        Button changeGameBoardSizeBtn;
-        Button changeGameModeBtn;
-        Button changePlayerProfileBtn;
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        MainActivityData viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
 
-        Button backBtn;
+        Button changeGameBoardSizeBtn = view.findViewById(R.id.gameBoardChangeBtn);
+        Button changeGameModeBtn = view.findViewById(R.id.changeGameModeBtn);
+        Button changePlayerProfileBtn = view.findViewById(R.id.changePlayerProfileBtn);
 
-        view = inflater.inflate(R.layout.fragment_settings, container, false);
-        viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
+        Button backBtn = view.findViewById(R.id.backBtn);
 
-        changeGameBoardSizeBtn = view.findViewById(R.id.gameBoardChangeBtn);
-        changeGameModeBtn = view.findViewById(R.id.changeGameModeBtn);
-        changePlayerProfileBtn = view.findViewById(R.id.changePlayerProfileBtn);
-
-        backBtn = view.findViewById(R.id.backBtn);
-
-        changeGameBoardSize_LL = view.findViewById(R.id.gameBoardChangeLinearLayout);
-        changeGameMode_LL = view.findViewById(R.id.changeGameModeLinearLayout);
-        changePlayerProfile_LL = view.findViewById(R.id.changePlayerProfileLinearLayout);
+        FrameLayout changeMapSizeFrameLayout = view.findViewById(R.id.gameBoardFrameLayout);
+        FrameLayout gameModeFrameLayout = view.findViewById(R.id.gameModeFrameLayout);
+        FrameLayout playerProfileFrameLayout = view.findViewById(R.id.playerProfileFrameLayout);
 
         changeGameBoardSizeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeGameBoardSize_LL.setVisibility(View.VISIBLE);
-                changeGameMode_LL.setVisibility(View.GONE);
-                changePlayerProfile_LL.setVisibility(View.GONE);
+                changeMapSizeFrameLayout.setVisibility(View.VISIBLE);
+                gameModeFrameLayout.setVisibility(View.GONE);
+                playerProfileFrameLayout.setVisibility(View.GONE);
+                gameBoardFrameLayout();
             }
         });
 
         changeGameModeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeGameMode_LL.setVisibility(View.VISIBLE);
-                changeGameBoardSize_LL.setVisibility(View.GONE);
-                changePlayerProfile_LL.setVisibility(View.GONE);
+                gameModeFrameLayout.setVisibility(View.VISIBLE);
+                playerProfileFrameLayout.setVisibility(View.GONE);
+                changeMapSizeFrameLayout.setVisibility(View.GONE);
+                gameModeFrameLayout();
             }
         });
 
         changePlayerProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changePlayerProfile_LL.setVisibility(View.VISIBLE);
-                changeGameMode_LL.setVisibility(View.GONE);
-                changeGameBoardSize_LL.setVisibility(View.GONE);
+                playerProfileFrameLayout.setVisibility(View.VISIBLE);
+                gameModeFrameLayout.setVisibility(View.GONE);
+                changeMapSizeFrameLayout.setVisibility(View.GONE);
+                playerProfileFrameLayout();
             }
         });
 
@@ -85,5 +82,26 @@ public class SettingsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void gameBoardFrameLayout(){
+        Fragment newFragment = new SettingFragmentChangeGameBoardSize();
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.add(R.id.gameBoardFrameLayout, newFragment);
+        transaction.commit();
+    }
+
+    private void gameModeFrameLayout(){
+        Fragment newFragment = new SettingFragmentChangeGameMode();
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.add(R.id.gameModeFrameLayout, newFragment);
+        transaction.commit();
+    }
+
+    private void playerProfileFrameLayout(){
+        Fragment newFragment = new SettingFragmentChangePlayerProfile();
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.add(R.id.playerProfileFrameLayout, newFragment);
+        transaction.commit();
     }
 }

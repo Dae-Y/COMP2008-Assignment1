@@ -51,7 +51,7 @@ public class PlayerData {
         this.playerWinAmount = playerWinAmount;
     }
 
-    public boolean isPlayerAI() {
+    public boolean getPlayerAI() {
         return playerAI;
     }
     public void setPlayerAI(boolean playerAI) {

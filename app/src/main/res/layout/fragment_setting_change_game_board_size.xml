@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SubSettingFragments.SettingFragmentChangeGameBoardSize">
+
+    <LinearLayout
+        android:id="@+id/gameBoardChangeLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#5160A4"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/changeSize_SBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textAppearance="@style/CustomSubButtonText"
+            android:text="6 x 5 [Small Map]"/>
+        <Button
+            android:id="@+id/changeSize_MBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textAppearance="@style/CustomSubButtonText"
+            android:text="7 x 6 [Medium Map]"/>
+        <Button
+            android:id="@+id/changeSize_LBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textAppearance="@style/CustomSubButtonText"
+            android:text="8 x 7 [Large Map]"/>
+    </LinearLayout>
+
+</FrameLayout>

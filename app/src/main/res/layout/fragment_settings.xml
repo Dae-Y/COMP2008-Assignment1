@@ -18,37 +18,11 @@
             android:text="Change Game Board Size"
             android:textAppearance="@style/CustomMainButtonText"
             android:background="@drawable/rectangular_button" />
-        <LinearLayout
-            android:id="@+id/gameBoardChangeLinearLayout"
+        <FrameLayout
+            android:id="@+id/gameBoardFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:visibility="gone"
-            android:background="#5160A4"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginTop="-3dp"
-            android:paddingBottom="5dp">
-            <Button
-                android:id="@+id/changeSize_S"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="6 x 5 [s]"/>
-            <Button
-                android:id="@+id/changeSize_M"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="7 x 6 [M]"/>
-            <Button
-                android:id="@+id/changeSize_L"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="8 x 7 [L]"/>
-        </LinearLayout>
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/changeGameModeBtn"
@@ -58,31 +32,11 @@
             android:layout_marginTop="10dp"
             android:textAppearance="@style/CustomMainButtonText"
             android:background="@drawable/rectangular_button"/>
-        <LinearLayout
-            android:id="@+id/changeGameModeLinearLayout"
+        <FrameLayout
+            android:id="@+id/gameModeFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:visibility="gone"
-            android:background="#5160A4"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginTop="-3dp"
-            android:paddingBottom="5dp">
-            <Button
-                android:id="@+id/pveBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Player VS AI"/>
-            <Button
-                android:id="@+id/pvpBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Player VS Player"/>
-        </LinearLayout>
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/changePlayerProfileBtn"
@@ -92,35 +46,12 @@
             android:layout_marginTop="10dp"
             android:textAppearance="@style/CustomMainButtonText"
             android:background="@drawable/rectangular_button"/>
-        <LinearLayout
-            android:id="@+id/changePlayerProfileLinearLayout"
+        <FrameLayout
+            android:id="@+id/playerProfileFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:visibility="gone"
-            android:background="#5160A4"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginTop="-3dp"
-            android:paddingBottom="5dp">
-            <Button
-                android:id="@+id/player1Btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:text="Player 1"/>
-            <Button
-                android:id="@+id/player2Btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:text="Player 2"/>
-        </LinearLayout>
+            android:visibility="gone"/>
+
     </LinearLayout>
 
     <LinearLayout
