@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 public class MainActivity extends AppCompatActivity {
     MainActivityData mainActivityDataViewModel;
     StartFragment startFragment = new StartFragment();
+    GameFragment gameFragment = new GameFragment();
 
     FrameLayout topFrameLayout;
 
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(mainActivityDataViewModel.getFragmentState() == 1){
                     topFrameLayout.setVisibility(View.VISIBLE);
-                    // TODO: Add change to start_Game fragment
+                    //TODO: Levan's part for the top Layout
+                    loadGameBoard();
                 }
                 if(mainActivityDataViewModel.getFragmentState() == 2){
                     topFrameLayout.setVisibility(View.GONE);
@@ -59,6 +61,16 @@ public class MainActivity extends AppCompatActivity {
             fm.beginTransaction().add(R.id.bottomFrameLayout, startFragment).commit();
         }else{
             fm.beginTransaction().replace(R.id.bottomFrameLayout, startFragment).commit();
+        }
+    }
+
+    private void loadGameBoard(){
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.bottomFrameLayout);
+        if(frag == null){
+            fm.beginTransaction().add(R.id.bottomFrameLayout, gameFragment).commit();
+        }else{
+            fm.beginTransaction().replace(R.id.bottomFrameLayout, gameFragment).commit();
         }
     }
 }
