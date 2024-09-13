@@ -57,16 +57,14 @@ public class GameFragment extends Fragment {
             for (int row = 0; row < rows; row++) {
                 for (int col = 0; col < cols; col++) {
                     Button button = new Button(getContext());
-                    button.setLayoutParams(new GridLayout.LayoutParams(
-                            new GridLayout.Spec(row, 1f), new GridLayout.Spec(col, 1f)));
-                    button.setText(" ");
-                    button.setGravity(Gravity.CENTER);
-
-                    // Set button size programmatically (optional)
-                    GridLayout.LayoutParams params = (GridLayout.LayoutParams) button.getLayoutParams();
+                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(
+                            GridLayout.spec(row, 1f), GridLayout.spec(col, 1f));
                     params.width = buttonSize;
                     params.height = buttonSize;
                     button.setLayoutParams(params);
+                    button.setText(" ");
+                    button.setGravity(Gravity.CENTER);
+//                    button.setBackgroundResource(); // Set circular background
 
                     // Set button click listener
                     button.setOnClickListener(v -> {

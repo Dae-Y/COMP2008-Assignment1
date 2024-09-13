@@ -28,6 +28,8 @@ public class StartFragment extends Fragment {
     private Button statisticBtn;
     private Button settingBtn;
 
+    private TextView testData;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +45,29 @@ public class StartFragment extends Fragment {
         statisticBtn = view.findViewById(R.id.statisticBtn);
         settingBtn = view.findViewById(R.id.settingsBtn);
 
+        testData = view.findViewById(R.id.dataTest);
+
+        testData.setText(String.valueOf(viewModel.getGameBoardSize()[0]) + " " + String.valueOf(viewModel.getGameBoardSize()[1]));
+
 
         startGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "clicked and fragmentState change to 1 for startGame", Toast.LENGTH_LONG).show();
                 viewModel.setFragmentState(1);
+            }
+        });
+
+        statisticBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.setFragmentState(2);
+            }
+        });
+
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.setFragmentState(3);
             }
         });
 
