@@ -5,34 +5,44 @@
     android:layout_height="match_parent"
     tools:context=".SubSettingFragments.SettingFragmentChangePlayerProfile">
 
+
     <LinearLayout
-        android:id="@+id/changePlayerProfileLinearLayout"
+        android:id="@+id/player1LinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        android:background="#5160A4"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:paddingBottom="5dp">
-        <Button
-            android:id="@+id/player1Btn"
+        android:background="#6878C3"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="5dp">
+        <EditText
+            android:id="@+id/playerName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:textAppearance="@style/CustomSubButtonText"
-            android:text="Player 1"/>
-        <Button
-            android:id="@+id/player2Btn"
+            android:hint="Change player name"
+            android:gravity="center"
+            android:textAppearance="@style/CustomSubButtonText"/>
+        <Spinner
+            android:id="@+id/playerColorSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:textAppearance="@style/CustomSubButtonText"
-            android:text="Player 2"/>
+            android:textAlignment="center"/>
+        <Spinner
+            android:id="@+id/playerIconSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"/>
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/submit_button"/>
 
     </LinearLayout>
 

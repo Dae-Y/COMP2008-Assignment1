@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">ConnectFourGame</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="playerColorChoices">
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Yellow</item>
+        <item>Green</item>
+        <item>Orange</item>
+    </string-array>
+    <string-array name="playerIconChoices">
+        <item>Human</item>
+        <item>Robot</item>
+        <item>Dave</item>
+        <item>Cat</item>
+        <item>Dog</item>
+    </string-array>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
