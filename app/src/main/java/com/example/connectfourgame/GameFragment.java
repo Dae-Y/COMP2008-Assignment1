@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -57,16 +56,14 @@ public class GameFragment extends Fragment {
             for (int row = 0; row < rows; row++) {
                 for (int col = 0; col < cols; col++) {
                     Button button = new Button(getContext());
-                    button.setLayoutParams(new GridLayout.LayoutParams(
-                            new GridLayout.Spec(row, 1f), new GridLayout.Spec(col, 1f)));
-                    button.setText(" ");
-                    button.setGravity(Gravity.CENTER);
-
-                    // Set button size programmatically (optional)
-                    GridLayout.LayoutParams params = (GridLayout.LayoutParams) button.getLayoutParams();
+                    GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                    params.rowSpec = GridLayout.spec(row, 1f);
+                    params.columnSpec = GridLayout.spec(col, 1f);
                     params.width = buttonSize;
                     params.height = buttonSize;
                     button.setLayoutParams(params);
+                    button.setText(" ");
+                    button.setGravity(Gravity.CENTER);
 
                     // Set button click listener
                     button.setOnClickListener(v -> {
@@ -78,4 +75,5 @@ public class GameFragment extends Fragment {
             }
         }
     }
+
 }
