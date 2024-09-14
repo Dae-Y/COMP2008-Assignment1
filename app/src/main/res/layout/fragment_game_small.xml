@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridLayout
+        android:id="@+id/grid_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/wood_background"
+        android:padding="8dp"
+        android:rowCount="6"
+        android:columnCount="5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="5:6" >
+
+        <!-- Buttons for each slot -->
+        <!-- First row -->
+        <Button android:id="@+id/slot_0_0" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_0_1" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_0_2" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_0_3" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_0_4" style="@style/CircularSlot" />
+
+        <Button android:id="@+id/slot_1_0" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_1_1" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_1_2" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_1_3" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_1_4" style="@style/CircularSlot" />
+
+        <Button android:id="@+id/slot_2_0" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_2_1" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_2_2" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_2_3" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_2_4" style="@style/CircularSlot" />
+
+        <Button android:id="@+id/slot_3_0" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_3_1" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_3_2" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_3_3" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_3_4" style="@style/CircularSlot" />
+
+        <Button android:id="@+id/slot_4_0" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_4_1" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_4_2" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_4_3" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_4_4" style="@style/CircularSlot" />
+        <!-- Sixth row -->
+        <Button android:id="@+id/slot_5_0" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_5_1" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_5_2" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_5_3" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_5_4" style="@style/CircularSlot" />
+
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
