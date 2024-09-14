@@ -63,6 +63,14 @@
         <Button android:id="@+id/slot_5_4" style="@style/CircularSlot" />
         <Button android:id="@+id/slot_5_5" style="@style/CircularSlot" />
 
+        <!-- Seventh row -->
+        <Button android:id="@+id/slot_6_0" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_6_1" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_6_2" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_6_3" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_6_4" style="@style/CircularSlot" />
+        <Button android:id="@+id/slot_6_5" style="@style/CircularSlot" />
+
     </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
