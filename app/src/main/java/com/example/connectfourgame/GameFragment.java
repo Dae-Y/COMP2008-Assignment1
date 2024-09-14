@@ -1,5 +1,6 @@
 package com.example.connectfourgame;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,53 +35,49 @@ public class GameFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_game, container, false);
+
+        int[] boardSize = viewModel.getGameBoardSize();
+        int layoutId = getLayoutForBoardSize(boardSize);  // Determine which layout to use
+
+        // Inflate the correct layout
+        View view = inflater.inflate(layoutId, container, false);
+
         gridLayout = view.findViewById(R.id.grid_layout);
-        setupGrid();
+        setupSlotListeners();  // Call the method to handle clicks
         return view;
     }
 
-    private void setupGrid() {
-        int[] boardSize = viewModel.getGameBoardSize();
-        if (boardSize != null) {
-            int rows = boardSize[0];
-            int cols = boardSize[1];
+    // Helper method to select the correct layout based on board size
+    private int getLayoutForBoardSize(int[] boardSize) {
+        if (boardSize == null || boardSize.length != 2) {
+            throw new IllegalArgumentException("Invalid board size");
+        }
 
-            gridLayout.setRowCount(rows);
-            gridLayout.setColumnCount(cols);
+        int rows = boardSize[0];
+        int cols = boardSize[1];
 
-            // Calculate button size based only on width (since it's more limiting in portrait)
-            int totalWidth = getResources().getDisplayMetrics().widthPixels - (16 * 2);  // Adjust for margin
-            int buttonSize = totalWidth / cols; // Ensure all buttons fit within width
-
-            // Set grid layout height based on button size and rows
-            ViewGroup.LayoutParams layoutParams = gridLayout.getLayoutParams();
-            layoutParams.height = buttonSize * rows; // Set height to fit all buttons
-            gridLayout.setLayoutParams(layoutParams);
-
-            // Clear previous buttons
-            gridLayout.removeAllViews();
-
-            for (int row = 0; row < rows; row++) {
-                for (int col = 0; col < cols; col++) {
-                    Button button = new Button(getContext());
-                    button.setBackgroundResource(R.drawable.circular_slot); // Circular slot
-
-                    GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                    params.width = buttonSize;
-                    params.height = buttonSize;
-
-                    params.rowSpec = GridLayout.spec(row);
-                    params.columnSpec = GridLayout.spec(col);
-
-                    params.setMargins(4, 4, 4, 4); // Margins between slots
-
-                    button.setLayoutParams(params);
-
-                    gridLayout.addView(button);
-                }
-            }
+        if (rows == 6 && cols == 5) {
+            return R.layout.fragment_game_small;  // Use 6x5 board
+        } else if (rows == 7 && cols == 6) {
+            return R.layout.fragment_game_med;    // Use 7x6 board
+        } else if (rows == 8 && cols == 7) {
+            return R.layout.fragment_game_large;  // Use 8x6 board
+        } else {
+            throw new IllegalArgumentException("Unsupported board size");
         }
     }
 
+    private void setupSlotListeners() {
+        for (int i = 0; i < gridLayout.getChildCount(); i++) {
+            Button slotButton = (Button) gridLayout.getChildAt(i);
+            slotButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Change the color of the clicked slot
+                    GradientDrawable background = (GradientDrawable) slotButton.getBackground();
+                    background.setColor(getResources().getColor(R.color.clicked_slot_color));  // Set to your desired color
+                }
+            });
+        }
+    }
 }
