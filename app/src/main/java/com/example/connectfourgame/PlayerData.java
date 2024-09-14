@@ -14,7 +14,7 @@ public class PlayerData {
     private int playerWinAmount;
     private boolean playerAI;
 
-    PlayerData(String pName, String pColour, String pPicture, int pWinNum, boolean playerAI){
+    public PlayerData(String pName, String pColour, String pPicture, int pWinNum, boolean playerAI){
         playerName = pName;
         playerColour = pColour;
         profilePicture =  pPicture;

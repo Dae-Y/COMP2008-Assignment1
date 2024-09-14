@@ -16,8 +16,28 @@ import com.example.connectfourgame.MainActivityData;
 import com.example.connectfourgame.PlayerData;
 import com.example.connectfourgame.R;
 
+import java.util.List;
+
 
 public class SettingFragmentChangeGameMode extends Fragment {
+    Button pveBtn;
+    Button pvpBtn;
+
+    private void changeBtnColor(MainActivityData viewModel){
+        int activeProfile = viewModel.getActivePlayerProfile()[1];
+        PlayerData temp = viewModel.getPlayerData(activeProfile);
+        boolean vsBot = temp.getPlayerAI();
+
+        pveBtn.setBackgroundColor(Color.parseColor("#6A7BBF"));
+        pvpBtn.setBackgroundColor(Color.parseColor("#6A7BBF"));
+
+        if(vsBot){
+            pveBtn.setBackgroundColor(Color.parseColor("#3B4A8B"));
+        }else{
+            pvpBtn.setBackgroundColor(Color.parseColor("#3B4A8B"));
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,43 +50,40 @@ public class SettingFragmentChangeGameMode extends Fragment {
 
         MainActivityData viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
 
-        Button pveBtn = view.findViewById(R.id.pveBtn);
-        Button pvpBtn = view.findViewById(R.id.pvpBtn);
+        pveBtn = view.findViewById(R.id.pveBtn);
+        pvpBtn = view.findViewById(R.id.pvpBtn);
 
-
-
-        viewModel.playerDataArr.observe(getViewLifecycleOwner(), new Observer<PlayerData[]>() {
+        viewModel.playerDataArr.observe(getViewLifecycleOwner(), new Observer<List<PlayerData>>() {
             @Override
-            public void onChanged(PlayerData[] playerData) {
-                PlayerData temp = viewModel.getPlayerData(1);
-                boolean vsBot = temp.getPlayerAI();
+            public void onChanged(List<PlayerData> playerData) {
+                changeBtnColor(viewModel);
+            }
+        });
 
-                pveBtn.setBackgroundColor(Color.parseColor("#6A7BBF"));
-                pvpBtn.setBackgroundColor(Color.parseColor("#6A7BBF"));
-
-                if(vsBot){
-                    pveBtn.setBackgroundColor(Color.parseColor("#3B4A8B"));
-                }else{
-                    pvpBtn.setBackgroundColor(Color.parseColor("#3B4A8B"));
-                }
+        viewModel.activePlayers.observe(getViewLifecycleOwner(), new Observer<int[]>() {
+            @Override
+            public void onChanged(int[] ints) {
+                changeBtnColor(viewModel);
             }
         });
 
         pveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlayerData tempPD = viewModel.getPlayerData(1);
+                int activeProfile = viewModel.getActivePlayerProfile()[1];
+                PlayerData tempPD = viewModel.getPlayerData(activeProfile);
                 tempPD.setPlayerAI(true);
-                viewModel.setPlayerData(1, tempPD);
+                viewModel.setPlayerData(activeProfile, tempPD);
             }
         });
 
         pvpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlayerData tempPD = viewModel.getPlayerData(1);
+                int activeProfile = viewModel.getActivePlayerProfile()[1];
+                PlayerData tempPD = viewModel.getPlayerData(activeProfile);
                 tempPD.setPlayerAI(false);
-                viewModel.setPlayerData(1, tempPD);
+                viewModel.setPlayerData(activeProfile, tempPD);
             }
         });
 
