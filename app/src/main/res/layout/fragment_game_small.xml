@@ -49,6 +49,7 @@
         <Button android:id="@+id/slot_4_2" style="@style/CircularSlot" />
         <Button android:id="@+id/slot_4_3" style="@style/CircularSlot" />
         <Button android:id="@+id/slot_4_4" style="@style/CircularSlot" />
+
         <!-- Sixth row -->
         <Button android:id="@+id/slot_5_0" style="@style/CircularSlot" />
         <Button android:id="@+id/slot_5_1" style="@style/CircularSlot" />
