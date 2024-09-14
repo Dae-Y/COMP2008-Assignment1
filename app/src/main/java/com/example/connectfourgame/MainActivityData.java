@@ -3,6 +3,9 @@ package com.example.connectfourgame;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *  MainActivityData is used to extend to the viewModel with LiveData with the suitable
  *      variables
@@ -13,34 +16,39 @@ import androidx.lifecycle.ViewModel;
  **/
 
 public class MainActivityData extends ViewModel {
-    public MutableLiveData<PlayerData[]> playerDataArr;
+    public MutableLiveData<List<PlayerData>> playerDataArr;
     public MutableLiveData<int[]> gameBoardSize;
     public MutableLiveData<Integer> fragmentState;
+    public MutableLiveData<int[]> activePlayers;
 
     public MainActivityData() {
         playerDataArr = new MutableLiveData<>();
         gameBoardSize = new MutableLiveData<>();
         fragmentState = new MutableLiveData<>();
+        activePlayers = new MutableLiveData<>();
 
         // Initialize with 2 PlayerData objects in the array
-        PlayerData[] initialPlayerData = new PlayerData[2];
-        initialPlayerData[0] = new PlayerData("Player_1", "Red", "Human", 0, false);
-        initialPlayerData[1] = new PlayerData("Player_2", "Blue", "Robot", 0, true);
+        List<PlayerData> initialPlayerData = new ArrayList<>();
+        initialPlayerData.add(new PlayerData("Player_1", "Red", "Human", 0, false));
+        initialPlayerData.add(new PlayerData("Player_2", "Blue", "Robot", 0, true));
         playerDataArr.setValue(initialPlayerData);
 
         // Initialize gameBoardSize with an array of size 2
         gameBoardSize.setValue(new int[]{6, 5});
         fragmentState.setValue(0);
+        activePlayers.setValue(new int[]{0, 1});
     }
 
     public PlayerData getPlayerData(int index) {
-        PlayerData[] data = playerDataArr.getValue();
-        if (data != null && index >= 0 && index < data.length) {
-            return data[index];
+        List<PlayerData> data = playerDataArr.getValue();
+        if (data != null && index >= 0 && index < data.size()) {
+            return data.get(index);
         } else {
             throw new IndexOutOfBoundsException("Invalid index for getting player data");
         }
     }
+
+    public List<PlayerData> getPlayerArr(){ return  playerDataArr.getValue();}
 
     public int[] getGameBoardSize() {
         return gameBoardSize.getValue();
@@ -50,11 +58,21 @@ public class MainActivityData extends ViewModel {
         return fragmentState.getValue();
     }
 
+    public int[] getActivePlayerProfile(){ return  activePlayers.getValue();}
+
+    public int getPlayerProfileCount() {
+        List<PlayerData> tempArr = playerDataArr.getValue();
+        if(tempArr != null){
+            return tempArr.size();
+        }
+        return 0;
+    }
+
     public void setPlayerData(int index, PlayerData playerData) {
-        PlayerData[] currentData = playerDataArr.getValue();
-        if (currentData != null && index >= 0 && index < currentData.length) {
-            currentData[index] = playerData;
-            playerDataArr.setValue(currentData); // Trigger update
+        List<PlayerData> currentData = playerDataArr.getValue();
+        if (currentData != null && index >= 0 && index < currentData.size()) {
+            currentData.set(index,playerData);
+            playerDataArr.setValue(currentData);
         } else {
             throw new IndexOutOfBoundsException("Invalid index for setting player data");
         }
@@ -67,5 +85,18 @@ public class MainActivityData extends ViewModel {
     public void setFragmentState(int state){
         fragmentState.setValue(state);
     }
+
+    public void setActivePlayers(int p1, int p2){
+        activePlayers.setValue(new int[]{p1, p2});
+    }
+
+    public void addProfile(PlayerData newPlayerProfile){
+        List<PlayerData> currentData = playerDataArr.getValue();
+        if(currentData != null){
+            currentData.add(newPlayerProfile);
+            playerDataArr.setValue(currentData);
+        }
+    }
+
 }
 
