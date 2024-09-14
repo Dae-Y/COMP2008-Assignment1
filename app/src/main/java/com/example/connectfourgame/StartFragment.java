@@ -28,8 +28,6 @@ public class StartFragment extends Fragment {
     private Button statisticBtn;
     private Button settingBtn;
 
-    private TextView testData;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +42,6 @@ public class StartFragment extends Fragment {
         startGameBtn = view.findViewById(R.id.startGameBtn);
         statisticBtn = view.findViewById(R.id.statisticBtn);
         settingBtn = view.findViewById(R.id.settingsBtn);
-
-        testData = view.findViewById(R.id.dataTest);
-
-        testData.setText(String.valueOf(viewModel.getPlayerProfileCount()));
-
 
         startGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override

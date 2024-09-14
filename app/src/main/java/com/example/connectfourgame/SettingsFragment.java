@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,12 +20,28 @@ import com.example.connectfourgame.SubSettingFragments.SettingFragmentChangeGame
 import com.example.connectfourgame.SubSettingFragments.SettingFragmentChangeGameMode;
 import com.example.connectfourgame.SubSettingFragments.SettingFragmentChangePlayerProfile;
 
+import java.util.List;
+
 /**
  *  Fragment for setting
  *  Author : ACG
  */
 public class SettingsFragment extends Fragment {
     LinearLayout playerProfileLinearLayout;
+    Button player1Btn;
+    Button player2Btn;
+
+    public void updatePlayerBtnText(MainActivityData viewModel){
+        PlayerData temp = viewModel.getPlayerData(viewModel.getActivePlayerProfile()[0]);
+        player1Btn.setText(String.valueOf(temp.getPlayerName() + " [Player_1]"));
+        temp = viewModel.getPlayerData(viewModel.getActivePlayerProfile()[1]);
+        if(temp.getPlayerAI()){
+            player2Btn.setText(String.valueOf(temp.getPlayerName() + " [Player_2[BOT]]"));
+        }else{
+            player2Btn.setText(String.valueOf(temp.getPlayerName() + " [Player_2]"));
+        }
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,8 +59,11 @@ public class SettingsFragment extends Fragment {
         Button changeGameModeBtn = view.findViewById(R.id.changeGameModeBtn);
         Button changePlayerProfileBtn = view.findViewById(R.id.changePlayerProfileBtn);
 
-        Button player1Btn = view.findViewById(R.id.player1Btn);
-        Button player2Btn = view.findViewById(R.id.player2Btn);
+        Button addPlayerProfileBtn = view.findViewById(R.id.addPlayerBtn);
+        player1Btn = view.findViewById(R.id.player1Btn);
+        player2Btn = view.findViewById(R.id.player2Btn);
+
+        addPlayerProfileBtn.setBackgroundColor(Color.parseColor("#6A7BBF"));
         player1Btn.setBackgroundColor(Color.parseColor("#6A7BBF"));
         player2Btn.setBackgroundColor(Color.parseColor("#6A7BBF"));
 
@@ -51,23 +71,23 @@ public class SettingsFragment extends Fragment {
 
         FrameLayout changeMapSizeFrameLayout = view.findViewById(R.id.gameBoardFrameLayout);
         FrameLayout gameModeFrameLayout = view.findViewById(R.id.gameModeFrameLayout);
+        FrameLayout player0FrameLayout = view.findViewById(R.id.player0FrameLayout);
         FrameLayout player1FrameLayout = view.findViewById(R.id.player1FrameLayout);
         FrameLayout player2FrameLayout = view.findViewById(R.id.player2FrameLayout);
 
         playerProfileLinearLayout = view.findViewById(R.id.changePlayerProfileLinearLayout);
 
         /* Output Name */
-        viewModel.playerDataArr.observe(getViewLifecycleOwner(), new Observer<PlayerData[]>() {
+        viewModel.playerDataArr.observe(getViewLifecycleOwner(), new Observer<List<PlayerData>>() {
             @Override
-            public void onChanged(PlayerData[] playerData) {
-                PlayerData temp = viewModel.getPlayerData(0);
-                player1Btn.setText(String.valueOf(temp.getPlayerName() + " [Player_1]"));
-                temp = viewModel.getPlayerData(1);
-                if(temp.getPlayerAI()){
-                    player2Btn.setText(String.valueOf(temp.getPlayerName() + " [Player_2[BOT]]"));
-                }else{
-                    player2Btn.setText(String.valueOf(temp.getPlayerName() + " [Player_2]"));
-                }
+            public void onChanged(List<PlayerData> playerData) {
+                updatePlayerBtnText(viewModel);
+            }
+        });
+        viewModel.activePlayers.observe(getViewLifecycleOwner(), new Observer<int[]>() {
+            @Override
+            public void onChanged(int[] ints) {
+                updatePlayerBtnText(viewModel);
             }
         });
 
@@ -92,21 +112,48 @@ public class SettingsFragment extends Fragment {
             changeMapSizeFrameLayout.setVisibility(View.GONE);
         });
 
+        addPlayerProfileBtn.setOnClickListener(view17 -> {
+            player0FrameLayout.setVisibility(View.VISIBLE);
+            player1FrameLayout.setVisibility(View.GONE);
+            player2FrameLayout.setVisibility(View.GONE);
+            playerProfileFrameLayout("np", 0);
+            addPlayerProfileBtn.setBackgroundColor(Color.parseColor("#3B4A8B"));
+            player1Btn.setBackgroundColor(Color.parseColor("#6A7BBF"));
+            player2Btn.setBackgroundColor(Color.parseColor("#6A7BBF"));
+        });
+
         player1Btn.setOnClickListener(view1 -> {
             player1FrameLayout.setVisibility(View.VISIBLE);
             player2FrameLayout.setVisibility(View.GONE);
+            player0FrameLayout.setVisibility(View.GONE);
             playerProfileFrameLayout("p1", 1);
             player1Btn.setBackgroundColor(Color.parseColor("#3B4A8B"));
             player2Btn.setBackgroundColor(Color.parseColor("#6A7BBF"));
+            addPlayerProfileBtn.setBackgroundColor(Color.parseColor("#6A7BBF"));
         });
 
         player2Btn.setOnClickListener(view12 -> {
             player1FrameLayout.setVisibility(View.GONE);
             player2FrameLayout.setVisibility(View.VISIBLE);
+            player0FrameLayout.setVisibility(View.GONE);
             playerProfileFrameLayout("p2", 2);
             player2Btn.setBackgroundColor(Color.parseColor("#3B4A8B"));
             player1Btn.setBackgroundColor(Color.parseColor("#6A7BBF"));
+            addPlayerProfileBtn.setBackgroundColor(Color.parseColor("#6A7BBF"));
         });
+
+        getParentFragmentManager().registerFragmentLifecycleCallbacks(
+                new FragmentManager.FragmentLifecycleCallbacks() {
+                    @Override
+                    public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
+                        super.onFragmentDestroyed(fm, f);
+                        if (f instanceof SettingFragmentChangePlayerProfile) {
+                            // Handle the fragment close event here
+                            player0FrameLayout.setVisibility(View.GONE);
+                            addPlayerProfileBtn.setBackgroundColor(Color.parseColor("#6A7BBF"));
+                        }
+                    }
+                }, true);
 
         backBtn.setOnClickListener(view13 -> viewModel.setFragmentState(0));
 
