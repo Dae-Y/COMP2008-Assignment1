@@ -48,6 +48,16 @@ public class MainActivityData extends ViewModel {
         }
     }
 
+    // Getters added for readability
+    public PlayerData getPlayer1() {
+        return getPlayerData(0);  // Player 1 is at index 0
+    }
+
+    public PlayerData getPlayer2() {
+        return getPlayerData(1);  // Player 2 is at index 1
+    }
+
+
     public List<PlayerData> getPlayerArr(){ return  playerDataArr.getValue();}
 
     public int[] getGameBoardSize() {
