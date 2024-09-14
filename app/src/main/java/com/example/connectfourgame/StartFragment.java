@@ -47,7 +47,7 @@ public class StartFragment extends Fragment {
 
         testData = view.findViewById(R.id.dataTest);
 
-        testData.setText(String.valueOf(viewModel.getGameBoardSize()[0]) + " " + String.valueOf(viewModel.getGameBoardSize()[1]));
+        testData.setText(String.valueOf(viewModel.getPlayerProfileCount()));
 
 
         startGameBtn.setOnClickListener(new View.OnClickListener() {

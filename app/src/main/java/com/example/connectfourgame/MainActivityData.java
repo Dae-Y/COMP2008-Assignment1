@@ -50,6 +50,14 @@ public class MainActivityData extends ViewModel {
         return fragmentState.getValue();
     }
 
+    public int getPlayerProfileCount() {
+        PlayerData[] tempArr = playerDataArr.getValue();
+        if(tempArr != null){
+            return tempArr.length;
+        }
+        return 0;
+    }
+
     public void setPlayerData(int index, PlayerData playerData) {
         PlayerData[] currentData = playerDataArr.getValue();
         if (currentData != null && index >= 0 && index < currentData.length) {
@@ -67,5 +75,9 @@ public class MainActivityData extends ViewModel {
     public void setFragmentState(int state){
         fragmentState.setValue(state);
     }
+
+    public void addProfile(PlayerData newPlayerProfile){
+    }
+
 }
 
