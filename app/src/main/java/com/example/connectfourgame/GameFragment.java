@@ -1,7 +1,6 @@
 package com.example.connectfourgame;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,23 +49,31 @@ public class GameFragment extends Fragment {
             gridLayout.setRowCount(rows);
             gridLayout.setColumnCount(cols);
 
-            // Calculate button size dynamically
-            int totalWidth = getResources().getDisplayMetrics().widthPixels;
-            int totalHeight = getResources().getDisplayMetrics().heightPixels;
-            int buttonSize = Math.min(totalWidth / cols, totalHeight / rows); // Make it square
+            // Calculate button size based only on width (since it's more limiting in portrait)
+            int totalWidth = getResources().getDisplayMetrics().widthPixels - (16 * 2);  // Adjust for margin
+            int buttonSize = totalWidth / cols; // Ensure all buttons fit within width
+
+            // Set grid layout height based on button size and rows
+            ViewGroup.LayoutParams layoutParams = gridLayout.getLayoutParams();
+            layoutParams.height = buttonSize * rows; // Set height to fit all buttons
+            gridLayout.setLayoutParams(layoutParams);
+
+            // Clear previous buttons
+            gridLayout.removeAllViews();
 
             for (int row = 0; row < rows; row++) {
                 for (int col = 0; col < cols; col++) {
                     Button button = new Button(getContext());
-                    button.setBackgroundResource(R.drawable.circular_slot); // Set circular background
+                    button.setBackgroundResource(R.drawable.circular_slot); // Circular slot
 
                     GridLayout.LayoutParams params = new GridLayout.LayoutParams();
                     params.width = buttonSize;
                     params.height = buttonSize;
 
-                    params.rowSpec = GridLayout.spec(row, 1f);
-                    params.columnSpec = GridLayout.spec(col, 1f);
-                    params.setMargins(4, 4, 4, 4); // Optional margins between slots
+                    params.rowSpec = GridLayout.spec(row);
+                    params.columnSpec = GridLayout.spec(col);
+
+                    params.setMargins(4, 4, 4, 4); // Margins between slots
 
                     button.setLayoutParams(params);
 
