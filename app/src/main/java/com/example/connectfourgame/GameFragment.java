@@ -50,21 +50,25 @@ public class GameFragment extends Fragment {
             gridLayout.setRowCount(rows);
             gridLayout.setColumnCount(cols);
 
-            // Calculate button size based on GridLayout size
-            int buttonSize = getResources().getDimensionPixelSize(R.dimen.button_size); // Define button size in dimens.xml
+            // Calculate button size dynamically
+            int totalWidth = getResources().getDisplayMetrics().widthPixels;
+            int totalHeight = getResources().getDisplayMetrics().heightPixels;
+            int buttonSize = Math.min(totalWidth / cols, totalHeight / rows); // Make it square
 
             for (int row = 0; row < rows; row++) {
                 for (int col = 0; col < cols; col++) {
                     Button button = new Button(getContext());
+                    button.setBackgroundResource(R.drawable.circular_slot); // Set circular background
 
                     GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                    params.width = buttonSize;
+                    params.height = buttonSize;
+
                     params.rowSpec = GridLayout.spec(row, 1f);
                     params.columnSpec = GridLayout.spec(col, 1f);
+                    params.setMargins(4, 4, 4, 4); // Optional margins between slots
 
-                    // Set button click listener
-                    button.setOnClickListener(v -> {
-                        // Handle button click
-                    });
+                    button.setLayoutParams(params);
 
                     gridLayout.addView(button);
                 }
