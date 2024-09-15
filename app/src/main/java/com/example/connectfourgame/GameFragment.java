@@ -54,6 +54,7 @@ public class GameFragment extends Fragment {
         p2Arr = new int[boardSize[0]][boardSize[1]];
     }
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
