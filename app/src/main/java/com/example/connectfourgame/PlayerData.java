@@ -50,6 +50,7 @@ public class PlayerData {
     public void setPlayerWinAmount(int playerWinAmount) {
         this.playerWinAmount = playerWinAmount;
     }
+    public void addPlayerWinAmount(){this.playerWinAmount+=1;}
 
     public boolean getPlayerAI() {
         return playerAI;

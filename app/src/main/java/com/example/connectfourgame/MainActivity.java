@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
                     topFrameLayout.setVisibility(View.GONE);
                     loadStartFragment();
                 }
-                if(mainActivityDataViewModel.getFragmentState() == 1){
+                // state 1 and 5 are inter-changeable, to enable the start/restart of a game
+                if(mainActivityDataViewModel.getFragmentState() == 1 && mainActivityDataViewModel.getFragmentState() == 5){
                     topFrameLayout.setVisibility(View.VISIBLE);
                     //TODO: Levan's part for the top Layout
                     loadGameBoard();
