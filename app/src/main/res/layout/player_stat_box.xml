@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:layout_marginBottom="16dp"
+    android:background="#EEEEEE">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <!-- Player Name -->
+        <TextView
+            android:id="@+id/playerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Player Name"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Wins -->
+        <TextView
+            android:id="@+id/wins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wins: 0" />
+
+        <!-- Losses -->
+        <TextView
+            android:id="@+id/losses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Losses: 0" />
+
+        <!-- Win Percentage -->
+        <TextView
+            android:id="@+id/winPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Win %: 0.0%" />
+    </LinearLayout>
+
+</FrameLayout>

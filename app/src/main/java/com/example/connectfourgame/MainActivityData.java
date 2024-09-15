@@ -1,5 +1,6 @@
 package com.example.connectfourgame;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -20,12 +21,14 @@ public class MainActivityData extends ViewModel {
     public MutableLiveData<int[]> gameBoardSize;
     public MutableLiveData<Integer> fragmentState;
     public MutableLiveData<int[]> activePlayers;
+    private MutableLiveData<Integer> totalGames;
 
     public MainActivityData() {
         playerDataArr = new MutableLiveData<>();
         gameBoardSize = new MutableLiveData<>();
         fragmentState = new MutableLiveData<>();
         activePlayers = new MutableLiveData<>();
+        totalGames = new MutableLiveData<>(0);
 
         // Initialize with 2 PlayerData objects in the array
         List<PlayerData> initialPlayerData = new ArrayList<>();
@@ -50,11 +53,11 @@ public class MainActivityData extends ViewModel {
 
     // Getters added for readability
     public PlayerData getPlayer1() {
-        return getPlayerData(0);  // Player 1 is at index 0
+        return getPlayerData(getActivePlayerProfile()[0]);  // Player 1 is at index 0
     }
 
     public PlayerData getPlayer2() {
-        return getPlayerData(1);  // Player 2 is at index 1
+        return getPlayerData(getActivePlayerProfile()[1]);  // Player 2 is at index 1
     }
 
 
@@ -105,6 +108,30 @@ public class MainActivityData extends ViewModel {
         if(currentData != null){
             currentData.add(newPlayerProfile);
             playerDataArr.setValue(currentData);
+        }
+    }
+
+    public LiveData<Integer> simultaneouslyGetTotalGames()
+    {
+        return totalGames;
+    }
+
+    public int getTotalGames()
+    {
+        return totalGames.getValue();
+    }
+
+    public void increaseTotalGames()
+    {
+        totalGames.setValue(totalGames.getValue()+1);
+    }
+
+    public void increasePlayerWins(int playerIndex) {
+        List<PlayerData> players = playerDataArr.getValue();
+        if (players != null && playerIndex >= 0 && playerIndex < players.size()) {
+            PlayerData player = players.get(playerIndex);
+            player.setPlayerWinAmount(player.getPlayerWinAmount() + 1);
+            playerDataArr.setValue(players);
         }
     }
 

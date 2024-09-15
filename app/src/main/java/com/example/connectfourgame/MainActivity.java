@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     StartFragment startFragment = new StartFragment();
     GameFragment gameFragment = new GameFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
+    StatisticsFragment statsFragment = new StatisticsFragment();
 
     FrameLayout topFrameLayout;
 
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(mainActivityDataViewModel.getFragmentState() == 2){
                     topFrameLayout.setVisibility(View.GONE);
-                    // TODO: Add change to statistic fragment
+                    loadStatisticsFragment();
                 }
                 if(mainActivityDataViewModel.getFragmentState() == 3){
                     topFrameLayout.setVisibility(View.GONE);
@@ -83,6 +84,16 @@ public class MainActivity extends AppCompatActivity {
             fm.beginTransaction().add(R.id.bottomFrameLayout, settingsFragment).commit();
         }else{
             fm.beginTransaction().replace(R.id.bottomFrameLayout, settingsFragment).commit();
+        }
+    }
+
+    private void loadStatisticsFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.bottomFrameLayout);
+        if(frag == null){
+            fm.beginTransaction().add(R.id.bottomFrameLayout, statsFragment).commit();
+        }else{
+            fm.beginTransaction().replace(R.id.bottomFrameLayout, statsFragment).commit();
         }
     }
 }
