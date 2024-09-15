@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/backBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:background="@drawable/submit_button"/>
+
+        <Button
+            android:id="@+id/gameBoardChangeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Change Game Board Size"
+            android:textAppearance="@style/CustomMainButtonText"
+            android:background="@drawable/rectangular_button"
+            android:layout_marginTop="10dp"/>
+        <FrameLayout
+            android:id="@+id/gameBoardFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/changeGameModeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Change game mode"
+            android:layout_marginTop="15dp"
+            android:textAppearance="@style/CustomMainButtonText"
+            android:background="@drawable/rectangular_button"/>
+        <FrameLayout
+            android:id="@+id/gameModeFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/changePlayerProfileBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Change Player Profile"
+            android:layout_marginTop="15dp"
+            android:textAppearance="@style/CustomMainButtonText"
+            android:background="@drawable/rectangular_button"/>
+
+    <LinearLayout
+        android:id="@+id/changePlayerProfileLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#5160A4"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="gone">
+        <Button
+            android:id="@+id/player1Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textAppearance="@style/CustomSubButtonText"
+            android:text="Player 1"/>
+        <FrameLayout
+            android:id="@+id/player1FrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+        <Button
+            android:id="@+id/player2Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textAppearance="@style/CustomSubButtonText"
+            android:text="Player 2"/>
+        <FrameLayout
+            android:id="@+id/player2FrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</FrameLayout>
