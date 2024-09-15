@@ -169,6 +169,7 @@ public class GameFragment extends Fragment {
             if (isWinning(2)) {
                 gameFinished = true;
                 Toast.makeText(getContext(), "Player 2 (AI) wins!", Toast.LENGTH_LONG).show();
+                winner = 2;
             } else {
                 turnCounter++;
             }
