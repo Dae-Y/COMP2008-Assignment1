@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
@@ -28,8 +29,9 @@ public class GameFragment extends Fragment {
     private int turnCounter = 1;  // Start at 1 for Player 1's turn
     private boolean isBot;  // True = AI, False = Human Player
     private boolean gameFinished = false;  // Track if the game is over
-    // Set to keep track of the buttons that have already been clicked
     private final Set<Button> occupiedSlots = new HashSet<>();
+    private int[][] p1Arr, p2Arr;  // Arrays to track the game board for Player 1 and Player 2
+    private int winner = -1;  // Track the winner, -1 means no winner
 
     public GameFragment() {
         // Required empty public constructor
@@ -44,6 +46,11 @@ public class GameFragment extends Fragment {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
         isBot = viewModel.getPlayer2().getPlayerAI();  // Check if Player 2 is AI
+
+        // Initialize the board tracking arrays
+        int[] boardSize = viewModel.getGameBoardSize();
+        p1Arr = new int[boardSize[0]][boardSize[1]];
+        p2Arr = new int[boardSize[0]][boardSize[1]];
     }
 
     @Override
@@ -80,13 +87,13 @@ public class GameFragment extends Fragment {
             final Button slotButton = (Button) gridLayout.getChildAt(i);
 
             slotButton.setOnClickListener(v -> {
-                if(turnCounter == turnMax) {
+                if (turnCounter == turnMax) {
                     Toast.makeText(getContext(), "Game finished. It's a draw.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (gameFinished) {
-                    Toast.makeText(getContext(), "Game finished. Player " + ((turnCounter+1 % 2 == 0) ? "1" : "2") + " won.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Game finished. Player " + winner + " won.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -98,19 +105,23 @@ public class GameFragment extends Fragment {
                 } else {
                     Button selectedSlotButton = (Button) gridLayout.getChildAt(row * columnCount + column);
 
-                    if (turnCounter % 2 != 0) {
+                    if (turnCounter % 2 != 0) {  // Player 1's turn
                         setSlotColor(selectedSlotButton, R.color.gold);
-                    } else {
+                        p1Arr[row][column] = 1;  // Mark Player 1's move in p1Arr
+                    } else {  // Player 2's turn (AI or Human)
                         setSlotColor(selectedSlotButton, R.color.red);
+                        p2Arr[row][column] = 1;  // Mark Player 2's move in p2Arr
                     }
 
                     occupiedSlots.add(selectedSlotButton);
 
-                    int playerNum = turnCounter % 2 == 0 ? 1 : 2;
+                    int playerNum = turnCounter % 2 != 0 ? 1 : 2;  // Determine which player made the move
+
 
                     // Check for a win after each move
                     if (isWinning(playerNum)) {
                         gameFinished = true;
+                        winner = playerNum;  // Store the winner
                         Toast.makeText(getContext(), "Player " + playerNum + " wins!", Toast.LENGTH_LONG).show();
                         return;  // Stop further moves
                     }
@@ -124,20 +135,6 @@ public class GameFragment extends Fragment {
             });
         }
     }
-
-
-    // Find the lowest available row in a specific column
-    private int findAvailableRowInColumn(int column) {
-        int rows = gridLayout.getRowCount();
-        for (int row = rows - 1; row >= 0; row--) {
-            Button slotButton = (Button) gridLayout.getChildAt(row * gridLayout.getColumnCount() + column);
-            if (!isSlotOccupied(slotButton)) {
-                return row;
-            }
-        }
-        return -1;  // Column full
-    }
-
 
     private void handleAIMoveWithDelay() {
         int delay = new Random().nextInt(500) + 500;  // Random delay 0.5-1 seconds
@@ -160,16 +157,28 @@ public class GameFragment extends Fragment {
             Button aiChosenSlot = (Button) gridLayout.getChildAt(availableRow * gridLayout.getColumnCount() + randomColumn);
 
             setSlotColor(aiChosenSlot, R.color.red);  // AI's color
+            p2Arr[availableRow][randomColumn] = 1;  // Mark AI's move in p2Arr
             occupiedSlots.add(aiChosenSlot);
 
             if (isWinning(2)) {
                 gameFinished = true;
                 Toast.makeText(getContext(), "Player 2 (AI) wins!", Toast.LENGTH_LONG).show();
-            }
-            else{
+            } else {
                 turnCounter++;
             }
         }
+    }
+
+    // Find the lowest available row in a specific column
+    private int findAvailableRowInColumn(int column) {
+        int rows = gridLayout.getRowCount();
+        for (int row = rows - 1; row >= 0; row--) {
+            Button slotButton = (Button) gridLayout.getChildAt(row * gridLayout.getColumnCount() + column);
+            if (!isSlotOccupied(slotButton)) {
+                return row;
+            }
+        }
+        return -1;  // Column full
     }
 
     private boolean isSlotOccupied(Button slotButton) {
@@ -181,124 +190,60 @@ public class GameFragment extends Fragment {
         background.setColor(getResources().getColor(colorResId));
     }
 
-
-
-
     // Check if a player has won
     private boolean isWinning(int pNum) {
-        int rows = gridLayout.getRowCount();
-        int cols = gridLayout.getColumnCount();
-        int[][] board = new int[rows][cols];
+        int[][] board = pNum == 1 ? p1Arr : p2Arr;
 
-        boolean isWin = false;
-
-        // Fill the board array with current state
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                Button slotButton = (Button) gridLayout.getChildAt(row * cols + col);
-                if (isSlotOccupied(slotButton)) {
-                    GradientDrawable background = (GradientDrawable) slotButton.getBackground();
-                    int color = background.getColor().getDefaultColor();
-                    if (color == getResources().getColor(R.color.gold)) {
-                        board[row][col] = 1;  // Player 1's color
-                    } else if (color == getResources().getColor(R.color.red)) {
-                        board[row][col] = 2;  // Player 2's (or AI's) color
-                    } else {
-                        board[row][col] = 0;
-                    }
-                } else {
-                    board[row][col] = 0;
-                }
-            }
-        }
-
-        // Check for a win for the specified player
-        isWin = checkHorizontalWin(board, pNum) || isWin;
-        isWin = checkVerticalWin(board, pNum) || isWin;
-        isWin = checkDiagonalWin(board, pNum) || isWin;
-
-        return isWin;
+        // Check horizontal, vertical, and diagonal wins
+        return (checkHorizontalWin(board) || checkVerticalWin(board) || checkDiagonalWin(board));
     }
 
-    // Check for horizontal 4-in-a-row for a specific player
-    private boolean checkHorizontalWin(int[][] board, int pNum) {
-        boolean isWin = false;
+    private boolean checkHorizontalWin(int[][] board) {
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length - 3; col++) {
-                if (board[row][col] == pNum &&
-                        board[row][col + 1] == pNum &&
-                        board[row][col + 2] == pNum &&
-                        board[row][col + 3] == pNum) {
-                    isWin = true;
-                    break;
+                if (board[row][col] == 1 && board[row][col + 1] == 1 &&
+                        board[row][col + 2] == 1 && board[row][col + 3] == 1) {
+                    return true;
                 }
             }
-            if (isWin) break;
         }
-        return isWin;
+        return false;
     }
 
-    // Check for vertical 4-in-a-row for a specific player
-    private boolean checkVerticalWin(int[][] board, int pNum) {
-        boolean isWin = false;
+    private boolean checkVerticalWin(int[][] board) {
         for (int col = 0; col < board[0].length; col++) {
             for (int row = 0; row < board.length - 3; row++) {
-                if (board[row][col] == pNum &&
-                        board[row + 1][col] == pNum &&
-                        board[row + 2][col] == pNum &&
-                        board[row + 3][col] == pNum) {
-                    isWin = true;
-                    break;
+                if (board[row][col] == 1 && board[row + 1][col] == 1 &&
+                        board[row + 2][col] == 1 && board[row + 3][col] == 1) {
+                    return true;
                 }
             }
-            if (isWin) break;
         }
-        return isWin;
+        return false;
     }
 
-    // Check for diagonal 4-in-a-row for a specific player (both directions)
-    private boolean checkDiagonalWin(int[][] board, int pNum) {
-        boolean isWin = false;
-
-        // Check for \ diagonal
+    private boolean checkDiagonalWin(int[][] board) {
+        // Check \ diagonal (bottom-left to top-right)
         for (int row = 0; row < board.length - 3; row++) {
             for (int col = 0; col < board[0].length - 3; col++) {
-                if (board[row][col] == pNum &&
-                        board[row + 1][col + 1] == pNum &&
-                        board[row + 2][col + 2] == pNum &&
-                        board[row + 3][col + 3] == pNum) {
-                    isWin = true;
-                    break;
+                if (board[row][col] == 1 && board[row + 1][col + 1] == 1 &&
+                        board[row + 2][col + 2] == 1 && board[row + 3][col + 3] == 1) {
+                    return true;
                 }
-            }
-            if (isWin) break;
-        }
-
-        if (!isWin) {
-            // Check for / diagonal
-            for (int row = 3; row < board.length; row++) {
-                for (int col = 0; col < board[0].length - 3; col++) {
-                    if (board[row][col] == pNum &&
-                            board[row - 1][col + 1] == pNum &&
-                            board[row - 2][col + 2] == pNum &&
-                            board[row - 3][col + 3] == pNum) {
-                        isWin = true;
-                        break;
-                    }
-                }
-                if (isWin) break;
             }
         }
 
-        return isWin;
+        // Check / diagonal (top-left to bottom-right)
+        for (int row = 3; row < board.length; row++) {
+            for (int col = 0; col < board[0].length - 3; col++) {
+                if (board[row][col] == 1 && board[row - 1][col + 1] == 1 &&
+                        board[row - 2][col + 2] == 1 && board[row - 3][col + 3] == 1) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
-
-
-
-
-
-
-
-
-} // END GAME FRAGMENT
+}
