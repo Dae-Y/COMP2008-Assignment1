@@ -58,6 +58,7 @@ public class GameFragment extends Fragment {
         viewModel.setP2Arr(p2Arr);
     }
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
