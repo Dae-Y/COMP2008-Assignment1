@@ -1,5 +1,6 @@
 package com.example.connectfourgame;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -20,6 +21,7 @@ public class MainActivityData extends ViewModel {
     public MutableLiveData<int[]> gameBoardSize;
     public MutableLiveData<Integer> fragmentState;
     public MutableLiveData<int[]> activePlayers;
+    private MutableLiveData<Integer> totalGames;
     public int[][] p1Arr;
     public int[][] p2Arr;
 
@@ -28,6 +30,7 @@ public class MainActivityData extends ViewModel {
         gameBoardSize = new MutableLiveData<>();
         fragmentState = new MutableLiveData<>();
         activePlayers = new MutableLiveData<>();
+        totalGames = new MutableLiveData<>(0);
 
         // Initialize with 2 PlayerData objects in the array
         List<PlayerData> initialPlayerData = new ArrayList<>();
@@ -122,6 +125,30 @@ public class MainActivityData extends ViewModel {
         if(currentData != null){
             currentData.add(newPlayerProfile);
             playerDataArr.setValue(currentData);
+        }
+    }
+
+    public LiveData<Integer> simultaneouslyGetTotalGames()
+    {
+        return totalGames;
+    }
+
+    public int getTotalGames()
+    {
+        return totalGames.getValue();
+    }
+
+    public void increaseTotalGames()
+    {
+        totalGames.setValue(totalGames.getValue()+1);
+    }
+
+    public void increasePlayerWins(int playerIndex) {
+        List<PlayerData> players = playerDataArr.getValue();
+        if (players != null && playerIndex >= 0 && playerIndex < players.size()) {
+            PlayerData player = players.get(playerIndex);
+            player.setPlayerWinAmount(player.getPlayerWinAmount() + 1);
+            playerDataArr.setValue(players);
         }
     }
 

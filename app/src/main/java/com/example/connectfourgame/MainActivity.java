@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     GameFragment gameFragment = new GameFragment();
     LeaderBoardFragment leaderBoardFragment = new LeaderBoardFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
+    StatisticsFragment statsFragment = new StatisticsFragment();
 
     FrameLayout topFrameLayout;
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(mainActivityDataViewModel.getFragmentState() == 2){
                     topFrameLayout.setVisibility(View.GONE);
-                    // TODO: Add change to statistic fragment
+                    loadStatisticsFragment();
                 }
                 if(mainActivityDataViewModel.getFragmentState() == 3){
                     topFrameLayout.setVisibility(View.GONE);
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void loadLeaderBoard(){
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag = fm.findFragmentById(R.id.topFrameLayout);
@@ -95,6 +97,14 @@ public class MainActivity extends AppCompatActivity {
             fm.beginTransaction().add(R.id.topFrameLayout, leaderBoardFragment).commit();
         } else {
             fm.beginTransaction().replace(R.id.topFrameLayout, leaderBoardFragment).commit();
+
+    private void loadStatisticsFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.bottomFrameLayout);
+        if(frag == null){
+            fm.beginTransaction().add(R.id.bottomFrameLayout, statsFragment).commit();
+        }else{
+            fm.beginTransaction().replace(R.id.bottomFrameLayout, statsFragment).commit();
         }
     }
 }

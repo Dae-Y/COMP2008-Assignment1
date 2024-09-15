@@ -59,6 +59,7 @@ public class GameFragment extends Fragment {
         viewModel.setP2Arr(p2Arr);
     }
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -225,6 +226,7 @@ public class GameFragment extends Fragment {
     // Check if a player has won
     private boolean isWinning(int pNum) {
         int[][] board = pNum == 1 ? p1Arr : p2Arr;
+        endGame(pNum);
 
         // Check horizontal, vertical, and diagonal wins
         return (checkHorizontalWin(board) || checkVerticalWin(board) || checkDiagonalWin(board));
@@ -276,6 +278,20 @@ public class GameFragment extends Fragment {
         }
 
         return false;
+    }
+
+    private void endGame(int wonPlayer) {
+        gameFinished = true;
+        winner = wonPlayer;
+        viewModel.increaseTotalGames();
+
+        if (wonPlayer == 1) {
+            viewModel.increasePlayerWins(viewModel.getActivePlayerProfile()[0]);
+        } else if (wonPlayer == 2) {
+            viewModel.increasePlayerWins(viewModel.getActivePlayerProfile()[1]);
+        }
+
+        Toast.makeText(getContext(), "Player " + wonPlayer + " wins!", Toast.LENGTH_LONG).show();
     }
 
     //Assign color code according to the player's color
