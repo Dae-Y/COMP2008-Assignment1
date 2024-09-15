@@ -29,6 +29,7 @@ public class GameFragment extends Fragment {
     private int turnCounter = 1;  // Start at 1 for Player 1's turn
     private boolean isBot;  // True = AI, False = Human Player
     private boolean gameFinished = false;  // Track if the game is over
+    private boolean gameDraw = false;
     private final Set<Button> occupiedSlots = new HashSet<>();
     private int[][] p1Arr, p2Arr;  // Arrays to track the game board for Player 1 and Player 2
     private int winner = -1;  // Track the winner, -1 means no winner
@@ -93,7 +94,7 @@ public class GameFragment extends Fragment {
             final Button slotButton = (Button) gridLayout.getChildAt(i);
 
             slotButton.setOnClickListener(v -> {
-                if (turnCounter == turnMax) {
+                if (gameDraw) {
                     Toast.makeText(getContext(), "Game finished. It's a draw.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -136,6 +137,11 @@ public class GameFragment extends Fragment {
 
                     if (isBot && turnCounter % 2 == 0) {
                         handleAIMoveWithDelay();
+                    }
+
+                    if (turnCounter == turnMax+1) {
+                        Toast.makeText(getContext(), "It's a draw!.", Toast.LENGTH_SHORT).show();
+                        gameDraw = true;
                     }
                 }
             });
