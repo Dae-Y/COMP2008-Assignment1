@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
@@ -143,6 +144,12 @@ public class GameFragment extends Fragment {
                         gameFinished = true;
                         winner = playerNum;  // Store the winner
                         Toast.makeText(getContext(), "Player " + playerNum + " wins!", Toast.LENGTH_LONG).show();
+
+                        if(playerNum == 1){
+                            viewModel.getPlayer1().addPlayerWinAmount();
+                        }else{
+                            viewModel.getPlayer2().addPlayerWinAmount();
+                        }
                         return;  // Stop further moves
                     }
 

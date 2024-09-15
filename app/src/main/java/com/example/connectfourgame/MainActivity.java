@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     MainActivityData mainActivityDataViewModel;
     StartFragment startFragment = new StartFragment();
     GameFragment gameFragment = new GameFragment();
+    LeaderBoardFragment leaderBoardFragment = new LeaderBoardFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
     StatisticsFragment statsFragment = new StatisticsFragment();
 
@@ -40,9 +41,10 @@ public class MainActivity extends AppCompatActivity {
                     topFrameLayout.setVisibility(View.GONE);
                     loadStartFragment();
                 }
-                if(mainActivityDataViewModel.getFragmentState() == 1){
+                // state 1 and 5 are inter-changeable, to enable the start/restart of a game
+                if(mainActivityDataViewModel.getFragmentState() == 1 || mainActivityDataViewModel.getFragmentState() == 5){
                     topFrameLayout.setVisibility(View.VISIBLE);
-                    //TODO: Levan's part for the top Layout
+                    loadLeaderBoard();
                     loadGameBoard();
                 }
                 if(mainActivityDataViewModel.getFragmentState() == 2){
@@ -86,6 +88,15 @@ public class MainActivity extends AppCompatActivity {
             fm.beginTransaction().replace(R.id.bottomFrameLayout, settingsFragment).commit();
         }
     }
+
+
+    private void loadLeaderBoard(){
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.topFrameLayout);
+        if (frag == null) {
+            fm.beginTransaction().add(R.id.topFrameLayout, leaderBoardFragment).commit();
+        } else {
+            fm.beginTransaction().replace(R.id.topFrameLayout, leaderBoardFragment).commit();
 
     private void loadStatisticsFragment() {
         FragmentManager fm = getSupportFragmentManager();
