@@ -33,6 +33,7 @@ public class GameFragment extends Fragment {
     private final Set<Button> occupiedSlots = new HashSet<>();
     private int[][] p1Arr, p2Arr;  // Arrays to track the game board for Player 1 and Player 2
     private int winner = -1;  // Track the winner, -1 means no winner
+    private int player1Color, player2Color; // Global player color
 
     public GameFragment() {
         // Required empty public constructor
@@ -61,6 +62,11 @@ public class GameFragment extends Fragment {
         int layoutId = getLayoutForBoardSize(boardSize);
         View view = inflater.inflate(layoutId, container, false);
         gridLayout = view.findViewById(R.id.grid_layout);
+
+        // Getting the active player 1 and 2 color preference.
+        player1Color = getPlayerColor(viewModel.getPlayer1().getPlayerColour());
+        player2Color = getPlayerColor(viewModel.getPlayer2().getPlayerColour());
+
         setupSlotListeners(boardSize);
         return view;
     }
@@ -107,10 +113,10 @@ public class GameFragment extends Fragment {
                     Button selectedSlotButton = (Button) gridLayout.getChildAt(row * columnCount + column);
 
                     if (turnCounter % 2 != 0) {  // Player 1's turn
-                        setSlotColor(selectedSlotButton, R.color.gold);
+                        setSlotColor(selectedSlotButton, player1Color);
                         p1Arr[row][column] = 1;  // Mark Player 1's move in p1Arr
                     } else {  // Player 2's turn (AI or Human)
-                        setSlotColor(selectedSlotButton, R.color.red);
+                        setSlotColor(selectedSlotButton, player2Color);
                         p2Arr[row][column] = 1;  // Mark Player 2's move in p2Arr
                     }
 
@@ -162,7 +168,7 @@ public class GameFragment extends Fragment {
             int availableRow = findAvailableRowInColumn(randomColumn);
             Button aiChosenSlot = (Button) gridLayout.getChildAt(availableRow * gridLayout.getColumnCount() + randomColumn);
 
-            setSlotColor(aiChosenSlot, R.color.red);  // AI's color
+            setSlotColor(aiChosenSlot, player2Color);  // AI's color
             p2Arr[availableRow][randomColumn] = 1;  // Mark AI's move in p2Arr
             occupiedSlots.add(aiChosenSlot);
 
@@ -251,6 +257,31 @@ public class GameFragment extends Fragment {
         }
 
         return false;
+    }
+
+    //Assign color code according to the player's color
+    private int getPlayerColor(String playerColor) {
+        int colorTemp;
+        switch (playerColor){
+            case "Red":
+                colorTemp = R.color.red;
+                break;
+            case "Blue":
+                colorTemp = R.color.blue;
+                break;
+            case "Gold":
+                colorTemp = R.color.gold;
+                break;
+            case "Green":
+                colorTemp = R.color.green;
+                break;
+            case "Orange":
+                colorTemp = R.color.orange;
+                break;
+        default:
+            colorTemp = R.color.default_slot_color;
+        }
+        return colorTemp;
     }
 
 }

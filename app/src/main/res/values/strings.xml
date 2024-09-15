@@ -3,7 +3,7 @@
     <string-array name="playerColorChoices">
         <item>Red</item>
         <item>Blue</item>
-        <item>Yellow</item>
+        <item>Gold</item>
         <item>Green</item>
         <item>Orange</item>
     </string-array>
