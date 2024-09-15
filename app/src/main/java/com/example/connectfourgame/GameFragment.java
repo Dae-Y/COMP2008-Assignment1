@@ -77,13 +77,8 @@ public class GameFragment extends Fragment {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            p1Arr = viewModel.getP1Arr();
-            p2Arr = viewModel.getP2Arr();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            p1Arr = viewModel.getP1Arr();
-            p2Arr = viewModel.getP2Arr();
-        }
+        p1Arr = viewModel.getP1Arr();
+        p2Arr = viewModel.getP2Arr();
     }
 
     // Helper method to select the correct layout based on board size
