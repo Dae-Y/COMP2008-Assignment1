@@ -64,8 +64,8 @@ public class GameFragment extends Fragment {
         gridLayout = view.findViewById(R.id.grid_layout);
 
         // Getting the active player 1 and 2 color preference
-        player1Color = getPlayerColor(viewModel.getPlayerData(viewModel.getActivePlayerProfile()[0]).getPlayerColour());
-        player2Color = getPlayerColor(viewModel.getPlayerData(viewModel.getActivePlayerProfile()[1]).getPlayerColour());
+        player1Color = getPlayerColor(viewModel.getPlayer1().getPlayerColour());
+        player2Color = getPlayerColor(viewModel.getPlayer2().getPlayerColour());
 
         setupSlotListeners(boardSize);
         return view;
