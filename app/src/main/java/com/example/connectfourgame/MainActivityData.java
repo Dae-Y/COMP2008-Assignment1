@@ -22,6 +22,8 @@ public class MainActivityData extends ViewModel {
     public MutableLiveData<Integer> fragmentState;
     public MutableLiveData<int[]> activePlayers;
     private MutableLiveData<Integer> totalGames;
+    public int[][] p1Arr;
+    public int[][] p2Arr;
 
     public MainActivityData() {
         playerDataArr = new MutableLiveData<>();
@@ -60,6 +62,21 @@ public class MainActivityData extends ViewModel {
         return getPlayerData(getActivePlayerProfile()[1]);  // Player 2 is at index 1
     }
 
+    public int[][] getP1Arr() {
+        return p1Arr;
+    }
+
+    public void setP1Arr(int[][] p1Arr) {
+        this.p1Arr = p1Arr;
+    }
+
+    public int[][] getP2Arr() {
+        return p2Arr;
+    }
+
+    public void setP2Arr(int[][] p2Arr) {
+        this.p2Arr = p2Arr;
+    }
 
     public List<PlayerData> getPlayerArr(){ return  playerDataArr.getValue();}
 

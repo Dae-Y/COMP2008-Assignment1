@@ -1,5 +1,6 @@
 package com.example.connectfourgame;
 
+import android.content.res.Configuration;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,6 +54,8 @@ public class GameFragment extends Fragment {
         int[] boardSize = viewModel.getGameBoardSize();
         p1Arr = new int[boardSize[0]][boardSize[1]];
         p2Arr = new int[boardSize[0]][boardSize[1]];
+        viewModel.setP1Arr(p1Arr);
+        viewModel.setP2Arr(p2Arr);
     }
 
     @Override
@@ -69,6 +72,13 @@ public class GameFragment extends Fragment {
 
         setupSlotListeners(boardSize);
         return view;
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        p1Arr = viewModel.getP1Arr();
+        p2Arr = viewModel.getP2Arr();
     }
 
     // Helper method to select the correct layout based on board size
@@ -115,9 +125,11 @@ public class GameFragment extends Fragment {
                     if (turnCounter % 2 != 0) {  // Player 1's turn
                         setSlotColor(selectedSlotButton, player1Color);
                         p1Arr[row][column] = 1;  // Mark Player 1's move in p1Arr
+                        viewModel.p1Arr = p1Arr;
                     } else {  // Player 2's turn (AI or Human)
                         setSlotColor(selectedSlotButton, player2Color);
                         p2Arr[row][column] = 1;  // Mark Player 2's move in p2Arr
+                        viewModel.p2Arr = p2Arr;
                     }
 
                     occupiedSlots.add(selectedSlotButton);
