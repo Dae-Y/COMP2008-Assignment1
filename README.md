@@ -5,11 +5,13 @@
 <br>
 
 #### Group Assignment - Connect Four Game
+A simple board game that allows a player to compete against another player (human) or AI, featuring a comprehensive Connect Four game for Android.
+<br>
 <br>
 
 #### Assignment Outcome
-> - Something. <br>
-> - Something. <br>
-> - Something. <br>
-> - Something. <br>
+> - Comprehend and articulate mobile platform architectures and capabilities. <br>
+> - Design, implement and test mobile applications. <br>
+> - Identify and implement solutions to security, usability and energy-consumption issues in mobile application. <br>
+> - Integrate mobile applications with online services. <br>
 
